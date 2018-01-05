@@ -21,6 +21,10 @@ void AMovingPlatform::BeginPlay()
 		SetReplicates(true);
 		SetReplicateMovement(true);
 	}
+
+	GlobalStartLocation = GetActorLocation();
+	GlobalTargetLocation = GetTransform().TransformPosition(TargetLocation);
+	JourneyLength = (GlobalTargetLocation- GlobalStartLocation).Size();
 }
 
 // Called every frame
@@ -31,6 +35,16 @@ void AMovingPlatform::Tick(float DeltaTime)
 	if (HasAuthority())
 	{
 		FVector Location = GetActorLocation();
+		float JourneyTraveled = (Location - GlobalStartLocation).Size();
+
+		if (JourneyTraveled < JourneyTolerance)
+		{
+			MoveDirection = (GlobalTargetLocation - GlobalStartLocation).GetSafeNormal();
+		}
+		if (JourneyTraveled >= JourneyLength)
+		{
+			MoveDirection = (GlobalStartLocation - GlobalTargetLocation).GetSafeNormal();
+		}
 		Location += (Speed * DeltaTime) * MoveDirection;
 		SetActorLocation(Location);
 	}

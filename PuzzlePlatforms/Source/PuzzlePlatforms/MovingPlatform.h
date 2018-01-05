@@ -28,8 +28,17 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float Speed = 20;
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+	float JourneyTolerance = 5;
+
 	UPROPERTY(EditAnywhere, Category = "Setup", Meta = (MakeEditWidget = true) )
 	FVector TargetLocation;
 
 	FVector MoveDirection;
+
+private:
+	FVector GlobalTargetLocation;
+	FVector GlobalStartLocation;
+	float JourneyLength;
+
 };
