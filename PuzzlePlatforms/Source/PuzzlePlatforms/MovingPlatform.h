@@ -24,6 +24,8 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	FVector MoveDirection;
 	
 	UPROPERTY(EditAnywhere, Category = "Setup")
 	float Speed = 20;
@@ -34,11 +36,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Setup", Meta = (MakeEditWidget = true) )
 	FVector TargetLocation;
 
-	FVector MoveDirection;
+	void AddActiveTrigger();
+	void RemoveActiveTrigger();
+
 
 private:
 	FVector GlobalTargetLocation;
 	FVector GlobalStartLocation;
 	float JourneyLength;
 
+	UPROPERTY(EditAnywhere) 
+	int ActiveTriggers = 1;
 };
